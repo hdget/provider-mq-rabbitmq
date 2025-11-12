@@ -2,7 +2,6 @@ package rabbitmq
 
 import (
 	"context"
-	"github.com/hdget/common/intf"
 	"github.com/hdget/common/types"
 	"github.com/pkg/errors"
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -10,7 +9,7 @@ import (
 
 type subscription struct {
 	out                chan *types.Message
-	logger             intf.LoggerProvider
+	logger             types.LoggerProvider
 	notifyCloseChannel chan *amqp.Error
 	channel            *amqp.Channel
 	queueName          string

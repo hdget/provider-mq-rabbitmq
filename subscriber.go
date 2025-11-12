@@ -3,18 +3,18 @@ package rabbitmq
 import (
 	"context"
 	"fmt"
-	"github.com/hdget/common/intf"
-	"github.com/hdget/common/types"
-	"github.com/pkg/errors"
-	amqp "github.com/rabbitmq/amqp091-go"
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/hdget/common/types"
+	"github.com/pkg/errors"
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 type rmpSubscriberImpl struct {
 	*connection
-	logger              intf.LoggerProvider
+	logger              types.LoggerProvider
 	config              *RabbitMqConfig
 	closedChan          chan struct{}
 	closeSubscriber     func() error
@@ -24,7 +24,7 @@ type rmpSubscriberImpl struct {
 	useDelayTopology bool
 }
 
-func newSubscriber(name string, config *RabbitMqConfig, logger intf.LoggerProvider, options ...subscriberOption) (*rmpSubscriberImpl, error) {
+func newSubscriber(name string, config *RabbitMqConfig, logger types.LoggerProvider, options ...subscriberOption) (*rmpSubscriberImpl, error) {
 	conn, err := newConnection(logger, config)
 	if err != nil {
 		return nil, fmt.Errorf("subscriber create new connection: %w", err)
