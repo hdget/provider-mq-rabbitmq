@@ -2,18 +2,19 @@ package rabbitmq
 
 import (
 	"fmt"
-	"github.com/cenkalti/backoff/v4"
-	"github.com/hdget/common/intf"
-	"github.com/pkg/errors"
-	amqp "github.com/rabbitmq/amqp091-go"
 	"sync"
 	"sync/atomic"
+
+	"github.com/cenkalti/backoff/v4"
+	"github.com/hdget/common/types"
+	"github.com/pkg/errors"
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 // connection manages an AMQP connection.
 type connection struct {
 	config              *RabbitMqConfig
-	logger              intf.LoggerProvider
+	logger              types.LoggerProvider
 	amqpConnection      *amqp.Connection
 	connectionWaitGroup sync.WaitGroup
 	amqpConnectionLock  sync.Mutex
@@ -31,7 +32,7 @@ var (
 )
 
 // newConnection returns a new connection manager.
-func newConnection(logger intf.LoggerProvider, c *RabbitMqConfig) (*connection, error) {
+func newConnection(logger types.LoggerProvider, c *RabbitMqConfig) (*connection, error) {
 	cm := &connection{
 		config:        c,
 		logger:        logger,
